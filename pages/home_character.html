@@ -1,0 +1,91 @@
+<script>
+    $(function(){
+        var spotifyUSR = $.session.get("spotifyUSR");
+
+        var heroInfo = getSingleHeroInfo(0, spotifyUSR);
+        var obj = $.parseJSON(heroInfo);
+
+        var id;
+        var name;
+        var gender;
+        var level;
+        var exp;
+
+        $.each(obj, function() {
+            hero_id = this['id'];
+            name = this['name'];
+            gender = this['gender'];
+            level = this['level'];
+            exp = this['exp'];
+            gold = this['gold'];
+        });
+
+        var next_level = parseInt(level) + 1;
+
+        var next_level_exp = nextLevelExp(next_level);
+
+        $("#hero_name").html(name);
+        $("#hero_level").html(level);
+        $("#hero_exp").html(exp + "/" + next_level_exp);
+        $("#hero_gold").html(gold);
+
+        $("#switchCharacter").click(function(){
+            $("body").load("pages/switch_character.html");
+        });
+
+        $("#createNewCharacter").click(function(){
+            $("body").load("pages/create_character.html");
+        });
+
+        setInterval(function() {
+            getCurrentPlayerInfo(function(playing, position, trackuri) {
+                if(playing == true){
+                    getTrackInfo(trackuri);
+                    getArtistInfo(artist);
+
+                    var returnExp = addExp(hero_id, next_level);
+
+                    var heroInfo = getSingleHeroInfo(0, spotifyUSR);
+                    var obj = $.parseJSON(heroInfo);
+
+                    var exp;
+
+                    $.each(obj, function() {
+                        exp = this['exp'];
+                    });
+
+                    $("#hero_exp").html(exp + "/" + next_level_exp);
+
+                    if(returnExp == 1){
+                        level = parseInt(level) + 1;
+                        next_level = parseInt(level) + 1;
+                        next_level_exp = nextLevelExp(next_level);
+                        $("#hero_level").html(level);
+                    }
+                }
+            });
+        }, 2000);
+
+    });
+</script>
+
+<div class="bgcontainer">
+    <div class="clouds"></div>
+</div>
+<div class="hero"><img src="images/hero.gif"></div>
+<div class="ground"></div>
+<hr>
+
+<div class="characterInfo">
+    <span>Hero name: </span><span  id="hero_name"></span><br />
+    <span>Level: </span><span  id="hero_level"></span><br />
+    <span>Exp: </span><span  id="hero_exp"></span><br />
+    <span>Gold: </span><span  id="hero_gold"></span><br />
+</div>
+
+<div class="charactMenu">
+    
+    <a href="#" id="switchCharacter">Switch Character</a>
+    <a href="#" id="createNewCharacter">Create New Character</a>
+
+</div>
