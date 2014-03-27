@@ -1,0 +1,26 @@
+<script>
+    $(function(){
+        var spotifyUSR = $.session.get("spotifyUSR");
+
+        var heroesInfo = getAllHeroInfo(spotifyUSR);
+        var obj = $.parseJSON(heroesInfo);
+
+        var heroes = '';
+
+        $.each(obj, function() {
+            heroes += "<a href='#' class='changeHero' value='" + this['id'] + "'>" + this['name'] + "</a><br />";
+        });
+        $('.characterList').html(heroes);
+
+        $(".changeHero").click(function(){
+            var heroID = $(this).attr("value");
+
+            switchCharacter(heroID);
+            $("body").load("pages/home_character.html");
+        });
+    });
+</script>
+
+<div class="characterList">
+
+</div>
