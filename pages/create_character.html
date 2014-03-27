@@ -1,0 +1,73 @@
+<script>
+    $(function(){
+	    var spotifyUSR = $.session.get("spotifyUSR");
+	    
+	    $('#hero_name').val(spotifyUSR);
+	    checkHeroName(spotifyUSR);
+
+        $(".gender_button").click(function(){
+            var hero_name = $("#hero_name").val();
+            var gender = $(this).attr("id");
+
+            var msg = checkHeroName(hero_name);
+            if(msg == 0){
+                getUserInfo(function(user_name) {
+                    $.ajax({
+                        type: "POST",
+                        url: "http://stud.cmi.hro.nl/0876292/jaar1/proj3/index.php",
+                        data: {
+                            page: "createhero",
+                            gender: gender,
+                            spotify_user: user_name,
+                            hero_name: hero_name,
+                            success: function(){
+
+                            }
+                        },
+                        cache: false
+                    });
+
+                    //Create session of the new hero info
+                    var heroInfo = getSingleHeroInfo(0, user_name);
+                    var obj = $.parseJSON(heroInfo);
+
+                    var id;
+                    var name;
+                    var gender;
+                    var level;
+                    var exp;
+
+                    $.each(obj, function() {
+                        id = this['id'];
+                        name = this['name'];
+                        gender = this['gender'];
+                        level = this['level'];
+                        exp = this['exp'];
+                    });
+
+                    $.session.set("heroID", id);
+                    location.reload();
+                });
+            }else{
+                $(".registerInfo").html("<font color='#c60000'>Fix the above error, before continue.</font>");
+            }
+        });
+
+        $("#hero_name").keyup(function(){
+            var hero_name = $(this).val();
+            checkHeroName(hero_name);
+        });
+    });
+</script>
+<div class="createCharacterMenu">
+    <h1>Hero Name</h1>
+    <input type="text" id="hero_name" />
+    <div class="nameCheckResults"></div>
+    <br />
+    <br />
+
+    <h1>Choose Gender</h1>
+    <button class="gender_button" id="male"><img src="../images/icons/male_icon.png" /></button>
+    <button class="gender_button" id="female"><img src="../images/icons/female_icon.png" /></button>
+    <div class="registerInfo"></div>
+</div>
