@@ -165,3 +165,26 @@ function addExp(hero_id, next_level){
 
     return returnval;
 }
+
+
+function getArtist(callback){
+    require(['$api/models'], function(models) {
+
+        models.player.load('track').done(function(player) {
+            var artist = player.track.artists[0].uri;
+            // console.log(artist);
+            models.Artist.fromURI(artist).load('genres').done(function(artist) {
+
+            console.log(artist.uri + ': ' + artist.genres);
+            });
+            //callback(track);
+        });
+            
+    });
+}
+
+getArtist();
+
+
+
+
