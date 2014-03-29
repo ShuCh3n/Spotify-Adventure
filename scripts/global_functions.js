@@ -182,3 +182,34 @@ function addExp(hero_id, next_level){
 
     return returnval;
 }
+
+function getQuestList(hero_id){
+	var returnval;
+
+    $.ajax({
+        type: "POST",
+        async: false,
+        url: "http://stud.cmi.hro.nl/0876292/jaar1/proj3/index.php",
+        //dataType: "json",
+        data: {
+            page: "getquests",
+            heroid: hero_id
+        },
+        cache: false,
+        success: function(msg){
+            returnval = msg;
+        }
+    });
+
+    return returnval;
+}
+
+function displayQuestButton(hero_id){
+	var quests = getQuestList(hero_id);
+	
+	if(quests != 0){
+		$("#quest_button").html("<a href='#' id='getQuest'>!</a>");
+		console.log(quests);
+	}
+	
+}

@@ -78,7 +78,7 @@ hr{
 }
 .charactMenu{
     margin-left: auto; margin-right: auto;
-    width:300px;
+    width:400px;
 }
 .charactMenu a {
     float: left;
@@ -98,6 +98,10 @@ hr{
 }
 .charactMenu a:hover{
     top:-5px;
+}
+.charactMenu #getQuest{
+	width: 30px;
+	color: #ffe100;
 }
 /*fonts*/
 @font-face {
