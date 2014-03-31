@@ -146,19 +146,64 @@ function checkLevel($hero_id, $next_level){
     }
 
 }
+function questInfo($quest_id){
+    global $mysqli;
+    $query = $mysqli->query("SELECT * FROM `prj3_quests` WHERE id = '" . $quest_id . "'");
+    $query_row = $query->fetch_object();
 
-function getQuests($hero_id){
-	global $mysqli;
-	list($hero_id, $hero_name, $hero_gender, $hero_level, $hero_exp, $hero_gold) = getSingleHeroInfo($hero_id, 0, 0);
+    $id = $query_row->id;
+    $level_req = $query_row->level_req;
+    $title = $query_row->title;
+    $description = $query_row->description;
+
+    return array($id, $level_req, $title, $description);
+}
+
+function getAcceptedQuests($hero_id){
+    global $mysqli;
 
     $query = $mysqli->query("SELECT * FROM `prj3_heroes_quest` WHERE hero_id = '" . $hero_id . "'");
     $count_query = $query->num_rows;
 
     if($count_query == 0){
-        $query = $mysqli->query("SELECT * FROM `prj3_quests` WHERE level_req <= '" . $hero_level . "'");
+        echo 0;
+    }else{
+        $i = 0;
+        echo  '[';
+        while($query_row = $query->fetch_object()){
+            $i++;
+
+            list($quest_id, $level_req, $title, $description) = questInfo($query_row->quest_id);
+            echo '{
+	                "id":"' . $quest_id . '" ,
+	                "level_req":"' . $level_req . '" ,
+	                "title":"' . addslashes($title) . '" ,
+	                "description":"' . addslashes($description) . '"';
+            if($i != $count_query){
+                echo '},';
+            }else{
+                echo '}';
+            }
+        }
+        echo ']';
+    }
+}
+
+function getQuests($hero_id){
+	global $mysqli;
+	list($hero_id, $hero_name, $hero_gender, $hero_level, $hero_exp, $hero_gold) = getSingleHeroInfo($hero_id, 0, 0);
+
+    $accepted_quest_query = $mysqli->query("SELECT * FROM `prj3_heroes_quest` WHERE hero_id = '" . $hero_id . "'");
+    $count_accepted_quest = $accepted_quest_query->num_rows;
+
+    if($count_accepted_quest != 0){
+        while($accepted_quest_row = $accepted_quest_query->fetch_object()){
+            $quest_id[] = $accepted_quest_row->quest_id;
+        }
+        $query = $mysqli->query("SELECT * FROM `prj3_quests` WHERE id NOT IN (" . implode(",", $quest_id). ") AND level_req <= '" . $hero_level . "'");
         $count_query = $query->num_rows;
     }else{
-        $query = $mysqli->query("SELECT * FROM prj3_quests INNER JOIN prj3_heroes_quest ON prj3_quests.id!=prj3_heroes_quest.quest_id AND prj3_quests.level_req <= '" . $hero_level . "'");
+        $query = $mysqli->query("SELECT * FROM `prj3_quests` WHERE level_req <= '" . $hero_level . "'");
         $count_query = $query->num_rows;
     }
 
@@ -170,11 +215,13 @@ function getQuests($hero_id){
 	    while($query_row = $query->fetch_object()){
             $i++;
 
+            list($quest_id, $level_req, $title, $description) = questInfo($query_row->id);
+
 	        echo '{
-	                "id":"' . $query_row->id . '" ,
-	                "level_req":"' . $query_row->level_req . '" ,
-	                "title":"' . addslashes($query_row->title) . '" ,
-	                "description":"' . addslashes($query_row->description) . '"';
+	                "id":"' . $quest_id . '" ,
+	                "level_req":"' . $level_req . '" ,
+	                "title":"' . addslashes($title) . '" ,
+	                "description":"' . addslashes($description) . '"';
 	        if($i != $count_query){
 	            echo '},';
 	        }else{
@@ -185,8 +232,15 @@ function getQuests($hero_id){
 	}
 }
 
-function acceptQuest($hero_id, $quest_id){
+function questAction($hero_id, $quest_id, $type){
     global $mysqli;
-    $mysqli->query("INSERT INTO `prj3_heroes_quest` VALUES ('" . $hero_id . "', '" . $quest_id . "', '0')");
+
+    if($type == 1){
+        $mysqli->query("INSERT INTO `prj3_heroes_quest` VALUES ('" . $hero_id . "', '" . $quest_id . "', '0')");
+    }
+
+    if($type == 0){
+        $mysqli->query("DELETE FROM prj3_heroes_quest WHERE hero_id = '" . $hero_id . "' AND quest_id = '" . $quest_id . "'");
+    }
 }
 ?>

@@ -203,25 +203,57 @@ function getQuestList(hero_id){
     return returnval;
 }
 
-function displayQuestButton(hero_id){
-	var quests = getQuestList(hero_id);
-	
-	if(quests != 0){
-		$("#quest_button").html("<a href='#' id='getQuest'>!</a>");
-	}
-	
-}
+function getAcceptedQuestList(hero_id){
+    var returnval;
 
-function acceptQuest(hero_id, quest_id){
     $.ajax({
         type: "POST",
         async: false,
         url: "http://stud.cmi.hro.nl/0876292/jaar1/proj3/index.php",
         //dataType: "json",
         data: {
-            page: "acceptquest",
+            page: "getacceptedquests",
+            heroid: hero_id
+        },
+        cache: false,
+        success: function(msg){
+            returnval = msg;
+        }
+    });
+
+    return returnval;
+}
+
+function displayQuestButton(hero_id){
+	var quests = getQuestList(hero_id);
+	
+	if(quests != 0){
+		$("#questlist_button").html("<a href='#' id='getQuest'>!</a>");
+	}
+	
+}
+
+function displayAcceptedQuestButton(hero_id){
+    var quests = getAcceptedQuestList(hero_id);
+
+    if(quests != 0){
+        $("#accepted_quest_button").html("<a href='#' id='acceptedQuest'>?</a>");
+        console.log(quests);
+    }
+
+}
+
+function questAction(hero_id, quest_id, typeaction){
+    $.ajax({
+        type: "POST",
+        async: false,
+        url: "http://stud.cmi.hro.nl/0876292/jaar1/proj3/index.php",
+        //dataType: "json",
+        data: {
+            page: "questaction",
             heroid: hero_id,
-            questid: quest_id
+            questid: quest_id,
+            type: typeaction
         },
         cache: false
     });

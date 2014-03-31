@@ -78,7 +78,7 @@ hr{
 }
 .charactMenu{
     margin-left: auto; margin-right: auto;
-    width:400px;
+    width:450px;
     overflow: hidden;
 }
 .charactMenu a {
@@ -100,7 +100,8 @@ hr{
 .charactMenu a:hover{
     top:-5px;
 }
-.charactMenu #getQuest{
+.charactMenu #getQuest,
+.charactMenu #acceptedQuest{
 	width: 30px;
 	color: #ffe100;
 }

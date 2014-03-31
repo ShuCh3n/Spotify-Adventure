@@ -69,9 +69,82 @@
         //If there is a quest availible show quest button
 		displayQuestButton(hero_id);
 
+        displayAcceptedQuestButton(hero_id);
+
         //Show quest list
-        $("#quest_button").click(function(){
-            $( ".quest_popup" ).fadeIn("slow");
+        $(".quest_button").click(function(){
+            var typequestbutton = $(this).attr('id');
+
+            $( ".quest_popup" ).fadeIn("slow", function(){
+
+                if(typequestbutton == "questlist_button"){
+                    var quest = getQuestList(hero_id);
+                }
+
+                if(typequestbutton == "accepted_quest_button"){
+                    var quest = getAcceptedQuestList(hero_id);
+                }
+
+                var obj = $.parseJSON(quest);
+                var quest_list = "";
+
+                $.each(obj, function() {
+                    quest_id = this['id'];
+                    level_req = this['level_req'];
+                    quest_title = this['title'];
+                    quest_desc =  this['description'];
+
+                    quest_list +=
+                            "<div class='quest_row' id='row_" + quest_id + "'>" +
+                                    "<div class='quest_head' id='" + quest_id + "'>" +
+                                    quest_title +
+                                    "</div>" +
+                                    "</div>"+
+
+                                    "<div class='quest_description' id='quest_desc_" + quest_id + "'><i>" +
+                                    quest_desc;
+
+                    if(typequestbutton == "questlist_button"){
+                        quest_list += " <button class='accept_quest' id='" + quest_id + "'>Accept</button>";
+                    }
+
+                    if(typequestbutton == "accepted_quest_button"){
+                        quest_list += " <button class='decline_quest' id='" + quest_id + "'>Decline</button>";
+                    }
+
+
+                    quest_list += "</i></div>";
+                });
+
+                $(".quest_list").html(quest_list);
+
+                //Show quest description
+                $(".quest_head").click(function(){
+                    var quest_id = $(this).attr('id');
+                    $( "#quest_desc_" + quest_id ).toggle("slow");
+                });
+
+                //Accept Quest
+                $(".accept_quest").click(function(){
+                    var quest_id = $(this).attr('id');
+
+                    questAction(hero_id, quest_id, "1");
+                    $( "#quest_desc_" + quest_id).remove();
+                    $( "#row_" + quest_id ).remove();
+
+                });
+
+                //Decline Quest
+                $(".decline_quest").click(function(){
+                    var quest_id = $(this).attr('id');
+
+                    questAction(hero_id, quest_id, "0");
+                    $( "#quest_desc_" + quest_id).remove();
+                    $( "#row_" + quest_id ).remove();
+
+                });
+
+            });
         });
 
         //Close quest list
@@ -98,57 +171,14 @@
 
 <div class="charactMenu">
     
-    <p id="quest_button"></p>
+    <p class="quest_button" id="questlist_button"></p>
     <a href="#" id="switchCharacter">Switch Character</a>
     <a href="#" id="createNewCharacter">Create New Character</a>
-	
+    <p class="quest_button" id="accepted_quest_button"></p>
+
 </div>
 
 <div class="quest_popup">
-    <script>
-        var quest = getQuestList(hero_id);
-        var obj = $.parseJSON(quest);
-        var quest_list = "";
-
-        $.each(obj, function() {
-            quest_id = this['id'];
-            level_req = this['level_req'];
-            quest_title = this['title'];
-            quest_desc =  this['description'];
-
-            quest_list +=
-                    "<div class='quest_row' id='row_" + quest_id + "'>" +
-                            "<div class='quest_head' id='" + quest_id + "'>" +
-                                quest_title +
-                            "</div>" +
-                    "</div>"+
-
-                    "<div class='quest_description' id='quest_desc_" + quest_id + "'><i>" +
-                            quest_desc+
-                            " <button class='accept_quest' id='" + quest_id + "'>Accept</button>"+
-                    "</i></div>"
-            ;
-        });
-
-        $(".quest_list").html(quest_list);
-
-        //Show quest description
-        $(".quest_head").click(function(){
-            var quest_id = $(this).attr('id');
-            $( "#quest_desc_" + quest_id ).toggle("slow");
-        });
-
-        //Accept Quest
-        $(".accept_quest").click(function(){
-            var quest_id = $(this).attr('id');
-
-            acceptQuest(hero_id, quest_id);
-            $( "#quest_desc_" + quest_id).remove();
-            $( "#row_" + quest_id ).remove();
-
-        });
-    </script>
-
     <div class="quest_list"></div>
     <button id="close_questlist">Close</button>
 </div>
