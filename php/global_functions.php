@@ -150,29 +150,43 @@ function checkLevel($hero_id, $next_level){
 function getQuests($hero_id){
 	global $mysqli;
 	list($hero_id, $hero_name, $hero_gender, $hero_level, $hero_exp, $hero_gold) = getSingleHeroInfo($hero_id, 0, 0);
-	$query = $mysqli->query("SELECT * FROM prj3_quests INNER JOIN prj3_heroes_quest ON prj3_quests.id!=prj3_heroes_quest.quest_id AND prj3_quests.level_req <= '" . $hero_level . "'");
-	$count_query = $query->num_rows;
-	
+
+    $query = $mysqli->query("SELECT * FROM `prj3_heroes_quest` WHERE hero_id = '" . $hero_id . "'");
+    $count_query = $query->num_rows;
+
+    if($count_query == 0){
+        $query = $mysqli->query("SELECT * FROM `prj3_quests` WHERE level_req <= '" . $hero_level . "'");
+        $count_query = $query->num_rows;
+    }else{
+        $query = $mysqli->query("SELECT * FROM prj3_quests INNER JOIN prj3_heroes_quest ON prj3_quests.id!=prj3_heroes_quest.quest_id AND prj3_quests.level_req <= '" . $hero_level . "'");
+        $count_query = $query->num_rows;
+    }
+
 	if($count_query == 0){
 		echo 0;
 	}else{
 		$i = 0;
 	    echo  '[';
 	    while($query_row = $query->fetch_object()){
-	        $i++;
-	
+            $i++;
+
 	        echo '{
 	                "id":"' . $query_row->id . '" ,
 	                "level_req":"' . $query_row->level_req . '" ,
-	                "title":"' . $query_row->title . '" ,
-	                "level":"' . $query_row->description . '"';
+	                "title":"' . addslashes($query_row->title) . '" ,
+	                "description":"' . addslashes($query_row->description) . '"';
 	        if($i != $count_query){
 	            echo '},';
 	        }else{
 	            echo '}';
 	        }
 	    }
-	    echo ']';	
+	    echo ']';
 	}
+}
+
+function acceptQuest($hero_id, $quest_id){
+    global $mysqli;
+    $mysqli->query("INSERT INTO `prj3_heroes_quest` VALUES ('" . $hero_id . "', '" . $quest_id . "', '0')");
 }
 ?>

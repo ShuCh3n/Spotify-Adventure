@@ -32,7 +32,6 @@ function getTrackInfo(trackuri){
 function getArtistInfo(artisturi){
     require(['$api/models'], function(models) {
         models.Artist.fromURI(artisturi).load('genres').done(function(artist) {
-            console.log(artist.genres);
         });
     });
 }
@@ -209,7 +208,21 @@ function displayQuestButton(hero_id){
 	
 	if(quests != 0){
 		$("#quest_button").html("<a href='#' id='getQuest'>!</a>");
-		console.log(quests);
 	}
 	
+}
+
+function acceptQuest(hero_id, quest_id){
+    $.ajax({
+        type: "POST",
+        async: false,
+        url: "http://stud.cmi.hro.nl/0876292/jaar1/proj3/index.php",
+        //dataType: "json",
+        data: {
+            page: "acceptquest",
+            heroid: hero_id,
+            questid: quest_id
+        },
+        cache: false
+    });
 }

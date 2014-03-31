@@ -1,3 +1,6 @@
+*{
+    margin: 0;
+}
 body {
     font-family: 'silkscreennormal', sans-serif;
     font-size: 1.4em;
@@ -5,9 +8,6 @@ body {
     height:100%;
     overflow:hidden;
     text-shadow: 3px 3px 0 #2a3c58;
-}
-*{
-    margin: 0;
 }
 hr{
     margin-bottom:10px;
@@ -79,6 +79,7 @@ hr{
 .charactMenu{
     margin-left: auto; margin-right: auto;
     width:400px;
+    overflow: hidden;
 }
 .charactMenu a {
     float: left;
@@ -121,4 +122,28 @@ hr{
 {
 0%   {-webkit-transform:translateX(0);}
 100% {-webkit-transform:translateX(-640px);}
+}
+
+
+/*shu added*/
+.quest_popup{
+    width: 500px;
+    min-height: 300px;
+    background: #fff;
+    display: none;
+    font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+    text-shadow: none;
+    margin: 0 auto;
+    position: relative;
+    z-index: 99;
+}
+.quest_row{
+    text-align: left;
+}
+.quest_row:hover{
+    background: #d3d3d3;
+    cursor: pointer;
+}
+.quest_description{
+    display: none;
 }
