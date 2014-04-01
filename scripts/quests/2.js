@@ -16,7 +16,7 @@ setInterval(function() {
                 if(trackuri == "spotify:track:6JEK0CvvjDjjMUBFoXShNZ"){
                     listentime = listentime + 5;
 
-                    if(listentime == 5){
+                    if(listentime == 195){
                         finishQuest(hero_id, quest_id_2);
                         finished_2 = 1;
                     }
