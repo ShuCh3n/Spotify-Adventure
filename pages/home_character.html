@@ -69,6 +69,7 @@
         //If there is a quest availible show quest button
 		displayQuestButton(hero_id);
 
+        //Display all the accepted quests
         displayAcceptedQuestButton(hero_id);
 
         //Show quest list
@@ -93,6 +94,8 @@
                     level_req = this['level_req'];
                     quest_title = this['title'];
                     quest_desc =  this['description'];
+                    quest_reward_type = this['reward_type'];
+                    quest_reward_amount = this['amount'];
 
                     quest_list +=
                             "<div class='quest_row' id='row_" + quest_id + "'>" +
@@ -109,7 +112,13 @@
                     }
 
                     if(typequestbutton == "accepted_quest_button"){
-                        quest_list += " <button class='decline_quest' id='" + quest_id + "'>Decline</button>";
+                        finished = this['finished'];
+
+                        if(finished == 1){
+                            quest_list += " <button class='complete_quest' id='" + quest_id + "'>Complete</button>";
+                        }else{
+                            quest_list += " <button class='decline_quest' id='" + quest_id + "'>Decline</button>";
+                        }
                     }
 
 
@@ -132,6 +141,8 @@
                     $( "#quest_desc_" + quest_id).remove();
                     $( "#row_" + quest_id ).remove();
 
+                    displayQuestButton(hero_id);
+                    displayAcceptedQuestButton(hero_id);
                 });
 
                 //Decline Quest
@@ -142,8 +153,18 @@
                     $( "#quest_desc_" + quest_id).remove();
                     $( "#row_" + quest_id ).remove();
 
+                    displayQuestButton(hero_id);
+                    displayAcceptedQuestButton(hero_id);
                 });
 
+                //Complete Quest
+                $(".complete_quest").click(function(){
+                    var quest_id = $(this).attr('id');
+
+                    completeQuest(hero_id, quest_id);
+                    $( "#quest_desc_" + quest_id).remove();
+                    $( "#row_" + quest_id ).remove();
+                });
             });
         });
 

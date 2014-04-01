@@ -155,14 +155,16 @@ function questInfo($quest_id){
     $level_req = $query_row->level_req;
     $title = $query_row->title;
     $description = $query_row->description;
+    $reward_type = $query_row->reward_type;
+    $amount = $query_row->amount;
 
-    return array($id, $level_req, $title, $description);
+    return array($id, $level_req, $title, $description, $reward_type, $amount);
 }
 
 function getAcceptedQuests($hero_id){
     global $mysqli;
 
-    $query = $mysqli->query("SELECT * FROM `prj3_heroes_quest` WHERE hero_id = '" . $hero_id . "'");
+    $query = $mysqli->query("SELECT * FROM `prj3_heroes_quest` WHERE hero_id = '" . $hero_id . "' AND completed = '0'");
     $count_query = $query->num_rows;
 
     if($count_query == 0){
@@ -173,12 +175,16 @@ function getAcceptedQuests($hero_id){
         while($query_row = $query->fetch_object()){
             $i++;
 
-            list($quest_id, $level_req, $title, $description) = questInfo($query_row->quest_id);
+            list($quest_id, $level_req, $title, $description, $reward_type, $amount) = questInfo($query_row->quest_id);
             echo '{
 	                "id":"' . $quest_id . '" ,
 	                "level_req":"' . $level_req . '" ,
 	                "title":"' . addslashes($title) . '" ,
-	                "description":"' . addslashes($description) . '"';
+	                "description":"' . addslashes($description) . '",
+                    "reward_type":"' . $reward_type . '",
+                    "amount":"' . $amount . '",
+                    "finished":"' . $query_row->finished . '"';
+
             if($i != $count_query){
                 echo '},';
             }else{
@@ -215,13 +221,15 @@ function getQuests($hero_id){
 	    while($query_row = $query->fetch_object()){
             $i++;
 
-            list($quest_id, $level_req, $title, $description) = questInfo($query_row->id);
+            list($quest_id, $level_req, $title, $description, $reward_type, $amount) = questInfo($query_row->id);
 
 	        echo '{
 	                "id":"' . $quest_id . '" ,
 	                "level_req":"' . $level_req . '" ,
 	                "title":"' . addslashes($title) . '" ,
-	                "description":"' . addslashes($description) . '"';
+	                "description":"' . addslashes($description) . '",
+                    "reward_type":"' . $reward_type . '",
+                    "amount":"' . $amount . '"';
 	        if($i != $count_query){
 	            echo '},';
 	        }else{
@@ -236,11 +244,35 @@ function questAction($hero_id, $quest_id, $type){
     global $mysqli;
 
     if($type == 1){
-        $mysqli->query("INSERT INTO `prj3_heroes_quest` VALUES ('" . $hero_id . "', '" . $quest_id . "', '0')");
+        $mysqli->query("INSERT INTO `prj3_heroes_quest` VALUES ('" . $hero_id . "', '" . $quest_id . "', '0', '0', CURRENT_TIMESTAMP)");
     }
 
     if($type == 0){
         $mysqli->query("DELETE FROM prj3_heroes_quest WHERE hero_id = '" . $hero_id . "' AND quest_id = '" . $quest_id . "'");
     }
+}
+
+function finishQuests($hero_id, $quest_id){
+    global $mysqli;
+
+    $mysqli->query("UPDATE `prj3_heroes_quest` SET `finished` = '1' WHERE `hero_id` = '" . $hero_id . "' AND `quest_id` = '" . $quest_id . "'");
+}
+
+function completeQuests($hero_id, $quest_id){
+    global $mysqli;
+    list($questid, $level_req, $title, $description, $reward_type, $amount) = questInfo($quest_id);
+
+    $mysqli->query("UPDATE `prj3_heroes_quest` SET `completed` = '1' WHERE `hero_id` = '" . $hero_id . "' AND `quest_id` = '" . $quest_id . "'");
+
+    if($reward_type == 1 || $reward_type == 2){
+        list($hero_id, $hero_name, $hero_gender, $hero_level, $hero_exp, $hero_gold) = getSingleHeroInfo($hero_id, 0, 0);
+    }
+
+    if($reward_type == 2){
+        echo $new_hero_gold = $hero_gold + $amount;
+
+        $mysqli->query("UPDATE `prj3_heroes` SET `gold` = '" . $new_hero_gold . "' WHERE `id` = '" . $hero_id . "'");
+    }
+
 }
 ?>

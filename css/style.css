@@ -147,4 +147,6 @@ hr{
 }
 .quest_description{
     display: none;
+    background: #3b3b3b;
+    color: #fff;
 }
