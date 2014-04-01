@@ -164,6 +164,18 @@
                     completeQuest(hero_id, quest_id);
                     $( "#quest_desc_" + quest_id).remove();
                     $( "#row_" + quest_id ).remove();
+
+                    var heroInfo = getSingleHeroInfo(hero_id, 0);
+                    var obj = $.parseJSON(heroInfo);
+
+                    $.each(obj, function() {
+                        exp = this['exp'];
+                        gold = this['gold'];
+                    });
+
+                    $("#hero_exp").html(exp + "/" + next_level_exp);
+                    $("#hero_gold").html(gold);
+
                 });
             });
         });
