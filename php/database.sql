@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 01, 2014 at 06:20 PM
+-- Generation Time: Apr 02, 2014 at 06:09 PM
 -- Server version: 5.5.33-1
 -- PHP Version: 5.4.4-14+deb7u5
 
@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS `prj3_heroes` (
   `name` varchar(128) NOT NULL,
   `gender` int(1) NOT NULL,
   `level` int(64) NOT NULL,
+  `health` int(11) NOT NULL,
   `exp` int(64) NOT NULL,
   `gold` bigint(64) NOT NULL,
   `last_played` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -42,10 +43,10 @@ CREATE TABLE IF NOT EXISTS `prj3_heroes` (
 -- Dumping data for table `prj3_heroes`
 --
 
-INSERT INTO `prj3_heroes` (`id`, `user_id`, `name`, `gender`, `level`, `exp`, `gold`, `last_played`) VALUES
-(1, 1, 'ShuCh3n', 0, 13, 6892, 3, '2014-04-01 11:39:54'),
-(2, 2, 'Bombo', 0, 7, 1651, 0, '2014-03-21 10:17:14'),
-(3, 3, 'Grannykin', 0, 0, 95, 0, '2014-03-21 12:29:12');
+INSERT INTO `prj3_heroes` (`id`, `user_id`, `name`, `gender`, `level`, `health`, `exp`, `gold`, `last_played`) VALUES
+(1, 1, 'ShuCh3n', 0, 16, 1408, 12308, 2, '2014-04-01 19:49:51'),
+(2, 2, 'Bombo', 0, 11, 968, 3242, 0, '2014-04-02 15:58:36'),
+(3, 3, 'Grannykin', 0, 0, 80, 95, 0, '2014-03-21 12:29:12');
 
 -- --------------------------------------------------------
 
@@ -66,8 +67,37 @@ CREATE TABLE IF NOT EXISTS `prj3_heroes_quest` (
 --
 
 INSERT INTO `prj3_heroes_quest` (`hero_id`, `quest_id`, `finished`, `completed`, `started`) VALUES
-(1, 1, 1, 1, '2014-04-01 16:14:59'),
-(1, 2, 1, 1, '2014-04-01 16:15:01');
+(1, 2, 1, 1, '2014-04-01 19:58:19'),
+(2, 1, 1, 0, '2014-04-01 21:22:44');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `prj3_mobs`
+--
+
+CREATE TABLE IF NOT EXISTS `prj3_mobs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `mob_name` varchar(128) NOT NULL,
+  `mob_level` varchar(128) NOT NULL,
+  `mob_description` text NOT NULL,
+  `health` int(11) NOT NULL,
+  `experience` int(11) NOT NULL,
+  `boss` int(1) NOT NULL,
+  `elite` int(1) NOT NULL,
+  `loot` varchar(128) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `prj3_mobs`
+--
+
+INSERT INTO `prj3_mobs` (`id`, `mob_name`, `mob_level`, `mob_description`, `health`, `experience`, `boss`, `elite`, `loot`) VALUES
+(1, 'Succubus Diane', '50', '', 5000, 1000, 1, 1, '4,5,9'),
+(2, 'Lich Queen Damla', '7', '', 2000, 500, 1, 1, '5,2,8'),
+(3, 'Shu the Fixer', '3', '', 500, 75, 0, 0, '1,6,3'),
+(4, 'Iron Sinan', '1', '', 100, 15, 0, 0, '5,8,6');
 
 -- --------------------------------------------------------
 
@@ -126,7 +156,7 @@ CREATE TABLE IF NOT EXISTS `prj3_spotify_users` (
   `spotify_user` varchar(128) NOT NULL,
   `date_joined` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `prj3_spotify_users`
