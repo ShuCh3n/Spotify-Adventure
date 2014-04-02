@@ -47,7 +47,7 @@ function createNewHero($gender, $spotify_user, $hero_name){
             break;
     }
 
-    $mysqli->query("INSERT INTO `prj3_heroes` VALUES (NULL , '" . $user_id . "', '" . $hero_name ."', '" . $gender . "', '0', '0', '0', CURRENT_TIMESTAMP)");
+    $mysqli->query("INSERT INTO `prj3_heroes` VALUES (NULL , '" . $user_id . "', '" . $hero_name ."', '" . $gender . "', '0', '80', '0', '0', CURRENT_TIMESTAMP)");
 }
 
 function checkHeroName($hero_name){
