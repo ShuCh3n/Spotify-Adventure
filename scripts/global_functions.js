@@ -301,3 +301,44 @@ function completeQuest(hero_id, quest_id){
         cache: false
     });
 }
+
+/*From here we start to using the new JSON function*/
+function requestJSON(data){
+    var returnval;
+
+    $.ajax({
+        type: "POST",
+        async: false,
+        url: "http://stud.cmi.hro.nl/0876292/jaar1/proj3/index.php",
+        data: data,
+        cache: false,
+        success: function(msg){
+            returnval = msg;
+            console.log(msg);
+        }
+    });
+
+    return returnval;
+}
+
+function searchMob(search_string){
+    var data = {'page':'searchmob','search':search_string};
+
+    var returnval = requestJSON(data);
+
+    return returnval;
+}
+
+function getMobInfo(mob_id){
+    var data = {'page':'mobinfo','id':mob_id};
+
+    var returnval = requestJSON(data);
+
+    return returnval;
+}
+
+function randomNumber(maxnum){
+    var randomnum = Math.floor(Math.random() * maxnum) + 1;
+
+    return randomnum;
+}

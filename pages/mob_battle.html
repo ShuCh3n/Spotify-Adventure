@@ -1,0 +1,175 @@
+<script src="../scripts/standard_functions.js"></script>
+<script>
+    $(function(){
+        var mob_id = $.session.get("challengedMobID");
+        var mobInfo = getMobInfo(mob_id);
+
+        var obj = $.parseJSON(mobInfo);
+
+        $.each(obj, function() {
+            mobid = this['id'];
+            mob_name = this['mob_name'];
+            mob_level = this['mob_level'];
+            mob_description = this['mob_description'];
+            full_mob_health = this['health'];
+            experience = this['experience'];
+            boss_type = this['boss_type'];
+            elite_type = this['elite_type'];
+            loot = this['loot'];
+        });
+
+        $("#mob_name").html(mob_name);
+        $("#mob_level").html(mob_level);
+        $("#mob_health").html(full_mob_health);
+
+        $("#switchCharacter").click(function(){
+            $("body").load("pages/switch_character.html");
+        });
+
+        $("#createNewCharacter").click(function(){
+            $("body").load("pages/create_character.html");
+        });
+
+        var hero_health = full_hero_health;
+        var mob_health = full_mob_health;
+        $(".userattack").click(function(){
+            var usertypeattack = $(this).attr("id");
+            var opponenttypeattack = randomNumber(3);
+
+            if(usertypeattack == 1){
+                var playerAttackType = "Attack";
+
+                var userattackpower = randomNumber(50);
+                var userdefendpower = 0;
+                var userhealpower = 0;
+
+                var playerEndValue = userattackpower;
+            }
+
+            if(usertypeattack == 2){
+                var playerAttackType = "Defend";
+
+                var userdefendpower = randomNumber(50);
+                var userattackpower = 0;
+                var userhealpower = 0;
+
+                var playerEndValue = userdefendpower;
+            }
+
+            if(usertypeattack == 3){
+                var playerAttackType = "Heal";
+
+                var userhealpower = randomNumber(50);
+                var userattackpower = 0;
+                var userdefendpower = 0;
+
+                var playerEndValue = userhealpower;
+            }
+
+            if(opponenttypeattack == 1){
+                var opponentAttackType = "Attack";
+
+                var opponentattackpower = randomNumber(500);
+                var opponentdefendpower = 0;
+                var opponenthealpower = 0;
+
+                var opponentEndValue = opponentattackpower;
+            }
+
+            if(opponenttypeattack == 2){
+                var opponentAttackType = "Defend";
+
+                var opponentdefendpower = randomNumber(500);
+                var opponentattackpower = 0;
+                var opponenthealpower = 0;
+
+                var opponentEndValue = opponentdefendpower;
+            }
+
+            if(opponenttypeattack == 3){
+                var opponentAttackType = "Heal";
+
+                var opponenthealpower = randomNumber(500);
+                var opponentattackpower = 0;
+                var opponentdefendpower = 0;
+
+                var opponentEndValue = opponenthealpower;
+            }
+
+            var userattacklifepoint = userattackpower - opponentdefendpower;
+            if(userattacklifepoint > 0){
+                mob_health = mob_health - userattacklifepoint
+                $("#mob_health").html(mob_health);
+            }
+            if(userhealpower > 0){
+                hero_health = hero_health + userhealpower;
+
+                if(hero_health > full_hero_health){
+                    hero_health = full_hero_health;
+                }
+
+                $("#hero_health").html(hero_health);
+            }
+
+            var opponentattacklifepoint = opponentattackpower - userdefendpower;
+            if(opponentattacklifepoint > 0){
+                hero_health = hero_health - opponentattacklifepoint;
+                $("#hero_health").html(hero_health);
+            }
+            if(opponenthealpower > 0){
+                mob_health = mob_health + opponenthealpower;
+
+                if(mob_health > full_mob_health){
+                    mob_health = full_mob_health;
+                }
+
+                $("#mob_health").html(mob_health);
+            }
+
+            $(".playerAttackType").html(playerAttackType);
+            $(".playerValue").html(playerEndValue);
+
+            $(".opponentAttackType").html(opponentAttackType);
+            $(".opponentValue").html(opponentEndValue);
+        });
+    });
+</script>
+
+<div class="bgcontainer">
+    <div class="clouds"></div>
+</div>
+
+<div class="hero"><img src="images/hero.gif"></div>
+<div class="ground"></div>
+<hr>
+
+<div class="characterInfo">
+    <span>Hero name: </span><span  id="hero_name"></span><br />
+    <span>Level: </span><span  id="hero_level"></span><br />
+    <span>Exp: </span><span  id="hero_exp"></span><br />
+    <span>Gold: </span><span  id="hero_gold"></span><br />
+    <span>Health: </span><span  id="hero_health"></span><br />
+</div>
+
+<div class="userAttackMenu">
+    <button class="userattack" id="1">Attack</button>
+    <button class="userattack" id="2">Deffend</button>
+    <button class="userattack" id="3">Heal</button>
+</div>
+
+<div class="battleField">
+    <div class="playerField">
+        <div class="playerAttackType"></div>
+        <div class="playerValue"></div>
+    </div>
+
+    <div class="opponentField">
+        <div class="opponentAttackType"></div>
+        <div class="opponentValue"></div>
+    </div>
+</div>
+<div class="mobMenu">
+    <span>Monster name: </span><span  id="mob_name"></span><br />
+    <span>Level: </span><span  id="mob_level"></span><br />
+    <span>Health: </span><span  id="mob_health"></span><br />
+</div>

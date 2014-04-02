@@ -1,33 +1,6 @@
+<script src="../scripts/standard_functions.js"></script>
 <script>
     $(function(){
-        var spotifyUSR = $.session.get("spotifyUSR");
-
-        var heroInfo = getSingleHeroInfo(0, spotifyUSR);
-        var obj = $.parseJSON(heroInfo);
-
-        var id;
-        var name;
-        var gender;
-        var level;
-        var exp;
-
-        $.each(obj, function() {
-            hero_id = this['id'];
-            name = this['name'];
-            gender = this['gender'];
-            level = this['level'];
-            exp = this['exp'];
-            gold = this['gold'];
-        });
-
-        var next_level = parseInt(level) + 1;
-
-        var next_level_exp = nextLevelExp(next_level);
-
-        $("#hero_name").html(name);
-        $("#hero_level").html(level);
-        $("#hero_exp").html(exp + "/" + next_level_exp);
-        $("#hero_gold").html(gold);
 
         $("#switchCharacter").click(function(){
             $("body").load("pages/switch_character.html");
@@ -36,35 +9,6 @@
         $("#createNewCharacter").click(function(){
             $("body").load("pages/create_character.html");
         });
-
-        setInterval(function() {
-            getCurrentPlayerInfo(function(playing, position, trackuri) {
-                if(playing == true){
-                    getTrackInfo(trackuri);
-                    getArtistInfo(artist);
-
-                    var returnExp = addExp(hero_id, next_level);
-
-                    var heroInfo = getSingleHeroInfo(0, spotifyUSR);
-                    var obj = $.parseJSON(heroInfo);
-
-                    var exp;
-
-                    $.each(obj, function() {
-                        exp = this['exp'];
-                    });
-
-                    $("#hero_exp").html(exp + "/" + next_level_exp);
-
-                    if(returnExp == 1){
-                        level = parseInt(level) + 1;
-                        next_level = parseInt(level) + 1;
-                        next_level_exp = nextLevelExp(next_level);
-                        $("#hero_level").html(level);
-                    }
-                }
-            });
-        }, 5000);
 
         //If there is a quest availible show quest button
 		displayQuestButton(hero_id);
@@ -184,6 +128,51 @@
         $("#close_questlist").click(function(){
             $( ".quest_popup" ).fadeOut("slow");
         });
+
+        $("#search_mob").keyup(function(){
+            var search_string = $(this).val();
+
+            if(search_string != ""){
+                var mobs = searchMob(search_string);
+
+                if(mobs != 0){
+                    var obj = $.parseJSON(mobs);
+                    $(".suggest_header").css("display", "none");
+
+                    var mob_list = "";
+
+                    $.each(obj, function() {
+                        mob_id = this['id'];
+                        mob_name = this['mob_name'];
+                        mob_level = this['mob_level'];
+                        mob_description = this['mob_description'];
+                        boss_type = this['boss_type'];
+                        elite_type = this['elite_type'];
+                        loot = this['loot'];
+
+                        mob_list += "<li>" + mob_name + " <button class='challenge_mob' id='" + mob_id + "'>Challenge</button></li>";
+                    });
+
+                    $(".mob_results").html(mob_list);
+
+
+                }else{
+                    $(".mob_results").html("<i>No mobs were found</i>");
+                }
+
+            }else{
+                $(".suggest_header").css("display", "block");
+                $(".mob_results").html("<i></i>");
+            }
+
+            $(".challenge_mob").click(function(){
+                var mob_id = $(this).attr('id');
+                $.session.set("challengedMobID", mob_id);
+                $("body").load("pages/mob_battle.html");
+            });
+
+        });
+
     });
 </script>
 
@@ -209,6 +198,13 @@
     <a href="#" id="createNewCharacter">Create New Character</a>
     <p class="quest_button" id="accepted_quest_button"></p>
 
+</div>
+
+<div class="mob_menu">
+    <h1>Search Mobs</h1>
+    <input type="text" id="search_mob">
+    <h1 class="suggest_header">Suggested Mobs</h1>
+    <div class="mob_results"></div>
 </div>
 
 <div class="quest_popup">

@@ -14,6 +14,9 @@ hr{
     width:100%;
     border-color:#334150;
 }
+li{
+    list-style-type: none;
+}
 .hero{
     position:absolute;
     bottom:170px;
@@ -149,4 +152,50 @@ hr{
     display: none;
     background: #3b3b3b;
     color: #fff;
+}
+
+.mob_menu{
+    width: 250px;
+    min-height: 300px;
+    background: #fff;
+    margin-left: 50px;
+    font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+    text-shadow: none;
+    padding: 10px;
+}
+
+.mob_menu h1{
+    font-size: 18px;
+}
+
+.mob_results,
+.suggested_mob_results{
+    min-height: 100px;
+}
+
+.mobMenu{
+    width: 250px;
+    min-height: 300px;
+    background: #fff;
+    float: right;
+    font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+    text-shadow: none;
+}
+
+.battleField{
+    width: 500px;
+    min-height: 300px;
+    margin: 0 auto;
+    overflow: hidden;
+    background: #fff;
+    font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+    text-shadow: none;
+}
+.playerField{
+    width: 150px;
+    float: left;
+}
+.opponentField{
+    width: 150px;
+    float: right;
 }

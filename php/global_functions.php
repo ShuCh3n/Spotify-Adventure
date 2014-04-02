@@ -76,6 +76,7 @@ function getSingleHeroInfo($hero_id, $spotify_user, $json){
                 "name":"' . $hero_info_row->name . '" ,
                 "gender":"' . $hero_info_row->gender . '" ,
                 "level":"' . $hero_info_row->level . '" ,
+                "health":"' . $hero_info_row->health . '" ,
                 "exp":"' . $hero_info_row->exp . '" ,
                 "gold":"' . $hero_info_row->gold . '"
                }]';
@@ -274,5 +275,64 @@ function completeQuests($hero_id, $quest_id){
         $mysqli->query("UPDATE `prj3_heroes` SET `gold` = '" . $new_hero_gold . "' WHERE `id` = '" . $hero_id . "'");
     }
 
+}
+
+function mobInfo($mob_id, $json){
+    global $mysqli;
+    $query = $mysqli->query("SELECT * FROM `prj3_mobs` WHERE `id` = '" . $mob_id . "' LIMIT 1");
+    $row = $query->fetch_object();
+
+    if($json == 0){
+        return array($row->id, $row->mob_name, $row->mob_level, $row->mob_description, $row->health, $row->experience, $row->boss, $row->elite, $row->loot);
+    }else{
+        echo '[{
+	                "id":"' . $row->id . '" ,
+	                "mob_name":"' . addslashes($row->mob_name) . '" ,
+	                "mob_level":"' . $row->mob_level . '" ,
+	                "mob_description":"' . addslashes($row->mob_description) . '",
+	                "health":"' . $row->health . '",
+	                "experience":"' . $row->experience . '",
+                    "boss_type":"' . $row->boss . '",
+                    "elite_type":"' . $row->elite . '",
+                    "loot":"' .$row->loot .'"}]';
+    }
+
+}
+
+function checkMobName($mob_name){
+    global $mysqli;
+    $query = $mysqli->query("SELECT * FROM `prj3_mobs` WHERE `mob_name` LIKE '%" . $mob_name . "%'");
+    $query_count = $query->num_rows;
+
+    $i = 0;
+
+    if($query_count > 0){
+        echo  '[';
+
+        while($row = $query->fetch_object()){
+            list($mob_id, $mob_name, $mob_level, $mob_description, $boss_type, $elite_type, $loot) = mobInfo($row->id, 0);
+
+            $i++;
+
+            echo '{
+	                "id":"' . $mob_id . '" ,
+	                "mob_name":"' . addslashes($mob_name) . '" ,
+	                "mob_level":"' . $mob_level . '" ,
+	                "mob_description":"' . addslashes($mob_description) . '",
+                    "boss_type":"' . $boss_type . '",
+                    "elite_type":"' . $elite_type . '",
+                    "loot":"' .$loot .'"';
+            if($i != $query_count){
+                echo '},';
+            }else{
+                echo '}';
+            }
+
+        }
+
+        echo ']';
+    }else{
+        echo "0";
+    }
 }
 ?>
