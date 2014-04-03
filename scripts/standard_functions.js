@@ -1,8 +1,8 @@
 $(function(){
     //Get Hero Information
-    var spotifyUSR = $.session.get("spotifyUSR");
+    spotifyUSR = $.session.get("spotifyUSR");
 
-    var heroInfo = getSingleHeroInfo(0, spotifyUSR);
+    heroInfo = getSingleHeroInfo(0, spotifyUSR);
     var obj = $.parseJSON(heroInfo);
 
     $.each(obj, function() {
