@@ -1,4 +1,17 @@
 $(function(){
+    //Switch Pages
+    $("#homeCharacter").click(function(){
+        $("body").load("pages/home_character.html");
+    });
+
+    $("#switchCharacter").click(function(){
+        $("body").load("pages/switch_character.html");
+    });
+
+    $("#createNewCharacter").click(function(){
+        $("body").load("pages/create_character.html");
+    });
+
     //Get Hero Information
     var spotifyUSR = $.session.get("spotifyUSR");
 
@@ -7,22 +20,22 @@ $(function(){
 
     $.each(obj, function() {
         hero_id = this['id'];
-        name = this['name'];
-        gender = this['gender'];
-        level = this['level'];
+        hero_name = this['name'];
+        hero_gender = this['gender'];
+        hero_level = this['level'];
         full_hero_health = this['health'];
-        exp = this['exp'];
-        gold = this['gold'];
+        hero_exp = this['exp'];
+        hero_gold = this['gold'];
     });
 
-    var next_level = parseInt(level) + 1;
+    var next_level = parseInt(hero_level) + 1;
 
     var next_level_exp = nextLevelExp(next_level);
 
-    $("#hero_name").html(name);
-    $("#hero_level").html(level);
-    $("#hero_exp").html(exp + "/" + next_level_exp);
-    $("#hero_gold").html(gold);
+    $("#hero_name").html(hero_name);
+    $("#hero_level").html(hero_level);
+    $("#hero_exp").html(hero_exp + "/" + next_level_exp);
+    $("#hero_gold").html(hero_gold);
     $("#hero_health").html(full_hero_health);
 
 
@@ -47,10 +60,10 @@ $(function(){
                 $("#hero_exp").html(exp + "/" + next_level_exp);
 
                 if(returnExp == 1){
-                    level = parseInt(level) + 1;
-                    next_level = parseInt(level) + 1;
+                    hero_level = parseInt(hero_level) + 1;
+                    next_level = parseInt(hero_level) + 1;
                     next_level_exp = nextLevelExp(next_level);
-                    $("#hero_level").html(level);
+                    $("#hero_level").html(hero_level);
                 }
             }
         });

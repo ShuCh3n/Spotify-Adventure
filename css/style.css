@@ -199,3 +199,11 @@ li{
     width: 150px;
     float: right;
 }
+.battleStatus{
+    font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+    text-shadow: none;
+    display: none;
+    width: 500px;
+    margin: 0 auto;
+    text-align: center;
+}

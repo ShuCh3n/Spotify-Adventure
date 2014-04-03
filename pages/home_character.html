@@ -1,15 +1,6 @@
 <script src="../scripts/standard_functions.js"></script>
 <script>
     $(function(){
-
-        $("#switchCharacter").click(function(){
-            $("body").load("pages/switch_character.html");
-        });
-
-        $("#createNewCharacter").click(function(){
-            $("body").load("pages/create_character.html");
-        });
-
         //If there is a quest availible show quest button
 		displayQuestButton(hero_id);
 
@@ -117,8 +108,8 @@
                         gold = this['gold'];
                     });
 
-                    $("#hero_exp").html(exp + "/" + next_level_exp);
-                    $("#hero_gold").html(gold);
+                    $("#hero_exp").html(hero_exp + "/" + next_level_exp);
+                    $("#hero_gold").html(hero_gold);
 
                 });
             });
@@ -146,6 +137,9 @@
                         mob_name = this['mob_name'];
                         mob_level = this['mob_level'];
                         mob_description = this['mob_description'];
+                        full_mob_health = this['health'];
+                        experience = this['experience'];
+                        mob_gold = this['gold'];
                         boss_type = this['boss_type'];
                         elite_type = this['elite_type'];
                         loot = this['loot'];

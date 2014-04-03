@@ -337,8 +337,13 @@ function getMobInfo(mob_id){
     return returnval;
 }
 
-function randomNumber(maxnum){
-    var randomnum = Math.floor(Math.random() * maxnum) + 1;
+function randomNumber(min, max){
+    var randomnum =  Math.round(Math.random() * (max - min) + min);
 
     return randomnum;
+}
+
+function defeatedMob(mob_id, hero_id){
+    var data = {'page':'defeatedmob','mob_id':mob_id, 'hero_id':hero_id};
+    requestJSON(data);
 }

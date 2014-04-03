@@ -283,7 +283,7 @@ function mobInfo($mob_id, $json){
     $row = $query->fetch_object();
 
     if($json == 0){
-        return array($row->id, $row->mob_name, $row->mob_level, $row->mob_description, $row->health, $row->experience, $row->boss, $row->elite, $row->loot);
+        return array($row->id, $row->mob_name, $row->mob_level, $row->mob_description, $row->health, $row->experience, $row->gold, $row->boss, $row->elite, $row->loot);
     }else{
         echo '[{
 	                "id":"' . $row->id . '" ,
@@ -292,6 +292,7 @@ function mobInfo($mob_id, $json){
 	                "mob_description":"' . addslashes($row->mob_description) . '",
 	                "health":"' . $row->health . '",
 	                "experience":"' . $row->experience . '",
+	                "gold":"' . $row->gold . '",
                     "boss_type":"' . $row->boss . '",
                     "elite_type":"' . $row->elite . '",
                     "loot":"' .$row->loot .'"}]';
@@ -310,7 +311,7 @@ function checkMobName($mob_name){
         echo  '[';
 
         while($row = $query->fetch_object()){
-            list($mob_id, $mob_name, $mob_level, $mob_description, $boss_type, $elite_type, $loot) = mobInfo($row->id, 0);
+            list($mob_id, $mob_name, $mob_level, $mob_description, $mob_health, $mob_experience, $mob_gold, $boss_type, $elite_type, $loot) = mobInfo($row->id, 0);
 
             $i++;
 
@@ -319,6 +320,9 @@ function checkMobName($mob_name){
 	                "mob_name":"' . addslashes($mob_name) . '" ,
 	                "mob_level":"' . $mob_level . '" ,
 	                "mob_description":"' . addslashes($mob_description) . '",
+	                "health":"' . $mob_health . '",
+	                "experience":"' . $mob_experience . '",
+	                "gold":"' . $mob_gold . '",
                     "boss_type":"' . $boss_type . '",
                     "elite_type":"' . $elite_type . '",
                     "loot":"' .$loot .'"';
@@ -334,5 +338,17 @@ function checkMobName($mob_name){
     }else{
         echo "0";
     }
+}
+
+function defeatedMob($mob_id, $hero_id){
+    global $mysqli;
+
+    list($mob_id, $mob_name, $mob_level, $mob_description, $mob_health, $mob_experience, $mob_gold, $boss_type, $elite_type, $loot) = mobInfo($mob_id, 0);
+    list($hero_id, $hero_name, $hero_gender, $hero_level, $hero_exp, $hero_gold) = getSingleHeroInfo($hero_id, 0, 0);
+
+    $new_gold = $hero_gold + $mob_gold;
+    $new_exp = $hero_exp + $mob_experience;
+
+    $mysqli->query("UPDATE `prj3_heroes` SET `exp` = '" . $new_exp . "', `gold` = '" . $new_gold . "' WHERE `id` ='" . $hero_id . "';");
 }
 ?>

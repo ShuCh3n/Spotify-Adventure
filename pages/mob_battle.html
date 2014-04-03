@@ -13,6 +13,7 @@
             mob_description = this['mob_description'];
             full_mob_health = this['health'];
             experience = this['experience'];
+            mob_gold = this['gold'];
             boss_type = this['boss_type'];
             elite_type = this['elite_type'];
             loot = this['loot'];
@@ -22,24 +23,28 @@
         $("#mob_level").html(mob_level);
         $("#mob_health").html(full_mob_health);
 
-        $("#switchCharacter").click(function(){
-            $("body").load("pages/switch_character.html");
-        });
-
-        $("#createNewCharacter").click(function(){
-            $("body").load("pages/create_character.html");
-        });
-
         var hero_health = full_hero_health;
         var mob_health = full_mob_health;
         $(".userattack").click(function(){
             var usertypeattack = $(this).attr("id");
-            var opponenttypeattack = randomNumber(3);
+            var standard_attack_power = 9;
+            var standard_defend_power = 6;
+            var standard_heal_power = 7;
+
+            if(mob_health == full_mob_health){
+                var opponenttypeattack = randomNumber(1, 3);
+            }else{
+                var opponenttypeattack = randomNumber(1, 2);
+            }
 
             if(usertypeattack == 1){
                 var playerAttackType = "Attack";
 
-                var userattackpower = randomNumber(50);
+                var pow_max = Math.pow(1.03, hero_level);
+                var max = Math.round(standard_attack_power * pow_max);
+                var min = Math.round(max * 0.5);
+
+                var userattackpower = randomNumber(min, max);
                 var userdefendpower = 0;
                 var userhealpower = 0;
 
@@ -49,7 +54,11 @@
             if(usertypeattack == 2){
                 var playerAttackType = "Defend";
 
-                var userdefendpower = randomNumber(50);
+                var pow_max = Math.pow(1.04, hero_level);
+                var max = Math.round(standard_defend_power * pow_max);
+                var min = Math.round(max * 0.5);
+
+                var userdefendpower = randomNumber(min, max);
                 var userattackpower = 0;
                 var userhealpower = 0;
 
@@ -59,17 +68,36 @@
             if(usertypeattack == 3){
                 var playerAttackType = "Heal";
 
-                var userhealpower = randomNumber(50);
+                var pow_max = Math.pow(1.02, hero_level);
+                var max = Math.round(standard_heal_power * pow_max);
+                var min = Math.round(max * 0.5);
+
+                var userhealpower = randomNumber(min, max);
                 var userattackpower = 0;
                 var userdefendpower = 0;
 
                 var playerEndValue = userhealpower;
             }
 
+            if(boss_type == 1){
+                standard_attack_power = standard_attack_power + 1;
+                standard_defend_power = standard_defend_power + 1;
+                standard_heal_power = standard_heal_power +1;
+            }
+            if(elite_type == 1){
+                standard_attack_power = standard_attack_power + 2;
+                standard_defend_power = standard_defend_power + 2;
+                standard_heal_power = standard_heal_power + 2;
+            }
+
             if(opponenttypeattack == 1){
                 var opponentAttackType = "Attack";
 
-                var opponentattackpower = randomNumber(500);
+                var pow_max = Math.pow(1.03, mob_level);
+                var max = Math.round(standard_attack_power * pow_max);
+                var min = Math.round(max * 0.5);
+
+                var opponentattackpower = randomNumber(min, max);
                 var opponentdefendpower = 0;
                 var opponenthealpower = 0;
 
@@ -79,7 +107,11 @@
             if(opponenttypeattack == 2){
                 var opponentAttackType = "Defend";
 
-                var opponentdefendpower = randomNumber(500);
+                var pow_max = Math.pow(1.04, mob_level);
+                var max = Math.round(standard_defend_power * pow_max);
+                var min = Math.round(max * 0.5);
+
+                var opponentdefendpower = randomNumber(min, max);
                 var opponentattackpower = 0;
                 var opponenthealpower = 0;
 
@@ -89,7 +121,11 @@
             if(opponenttypeattack == 3){
                 var opponentAttackType = "Heal";
 
-                var opponenthealpower = randomNumber(500);
+                var pow_max = Math.pow(1.04, mob_level);
+                var max = Math.round(standard_heal_power * pow_max);
+                var min = Math.round(max * 0.5);
+
+                var opponenthealpower = randomNumber(min, max);
                 var opponentattackpower = 0;
                 var opponentdefendpower = 0;
 
@@ -126,11 +162,35 @@
                 $("#mob_health").html(mob_health);
             }
 
-            $(".playerAttackType").html(playerAttackType);
-            $(".playerValue").html(playerEndValue);
+            if(hero_health <= "0" || mob_health <= "0"){
+                $(".battleField").hide();
+                $(".userAttackMenu").hide();
 
-            $(".opponentAttackType").html(opponentAttackType);
-            $(".opponentValue").html(opponentEndValue);
+                if(hero_health <= "0"){
+                    $(".battleStatus").css({"background":"#fed0d0", "border":"#960202 2px solid"});
+                    $(".battleStatus").html("You Lose! <button id='homeCharacter'>Return Home</button>");
+                }
+
+                if(mob_health <= "0"){
+                    $(".battleStatus").css({"background":"#f0ffc9", "border":"#6e9602 2px solid"});
+                    $(".battleStatus").html("You Win! <button id='homeCharacter'>Return Home</button>");
+
+                    defeatedMob(mobid, hero_id);
+                }
+
+                $(".battleStatus").fadeIn("slow");
+
+                $("#homeCharacter").click(function(){
+                    $("body").load("pages/home_character.html");
+                });
+            }else{
+                $(".playerAttackType").html(playerAttackType);
+                $(".playerValue").html(playerEndValue);
+
+                $(".opponentAttackType").html(opponentAttackType);
+                $(".opponentValue").html(opponentEndValue);
+            }
+
         });
     });
 </script>
@@ -168,6 +228,9 @@
         <div class="opponentValue"></div>
     </div>
 </div>
+
+<div class="battleStatus"></div>
+
 <div class="mobMenu">
     <span>Monster name: </span><span  id="mob_name"></span><br />
     <span>Level: </span><span  id="mob_level"></span><br />
