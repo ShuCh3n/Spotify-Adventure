@@ -28,16 +28,9 @@ $(function(){
         hero_gold = this['gold'];
     });
 
-    var next_level = parseInt(hero_level) + 1;
+    next_level = parseInt(hero_level) + 1;
 
-    var next_level_exp = nextLevelExp(next_level);
-
-    $("#hero_name").html(hero_name);
-    $("#hero_level").html(hero_level);
-    $("#hero_exp").html(hero_exp + "/" + next_level_exp);
-    $("#hero_gold").html(hero_gold);
-    $("#hero_health").html(full_hero_health);
-
+    next_level_exp = nextLevelExp(next_level);
 
     //Experience Interval
     setInterval(function() {

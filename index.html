@@ -26,6 +26,7 @@
             	$.session.set("spotifyUSR", user_name);
                 var exist = checkExistPlayer(user_name);
                 if(exist == 1){
+                    $.getScript("scripts/standard_functions.js");
                     $("body").load("pages/home_character.html");
                 }else{
                     $("body").load("pages/create_character.html");

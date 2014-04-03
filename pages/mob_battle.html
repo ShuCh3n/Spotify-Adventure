@@ -1,6 +1,11 @@
-<script src="../scripts/standard_functions.js"></script>
 <script>
     $(function(){
+        $("#hero_name").html(hero_name);
+        $("#hero_level").html(hero_level);
+        $("#hero_exp").html(hero_exp + "/" + next_level_exp);
+        $("#hero_gold").html(hero_gold);
+        $("#hero_health").html(full_hero_health);
+        
         var mob_id = $.session.get("challengedMobID");
         var mobInfo = getMobInfo(mob_id);
 
