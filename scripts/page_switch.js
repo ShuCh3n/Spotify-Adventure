@@ -1,6 +1,10 @@
 $(function(){
     //Switch Pages
-    $( "#homeCharacter"  ).click(function() {
+//    $( "#homeCharacter"  ).click(function() {
+//        $("body").load("pages/home_character.html");
+//    });
+
+    $('#homeCharacter').on('click', function () {
         $("body").load("pages/home_character.html");
     });
 

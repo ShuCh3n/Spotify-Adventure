@@ -347,3 +347,19 @@ function defeatedMob(mob_id, hero_id){
     var data = {'page':'defeatedmob','mob_id':mob_id, 'hero_id':hero_id};
     requestJSON(data);
 }
+
+function loadPage(type){
+    if(type == "home"){
+        var page = "pages/home_character.html";
+    }
+
+    if(type == "switch_character"){
+        var page = "pages/switch_character.html";
+    }
+
+    if(type == "create_new_character"){
+        var page = "pages/create_character.html";
+    }
+
+    $("body").load(page);
+}

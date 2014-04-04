@@ -1,4 +1,3 @@
-<script src="scripts/page_switch.js"></script>
 <script>
     $(function(){
         $("#hero_name").html(hero_name);
@@ -6,6 +5,15 @@
         $("#hero_exp").html(hero_exp + "/" + next_level_exp);
         $("#hero_gold").html(hero_gold);
         $("#hero_health").html(full_hero_health);
+
+        //Buttons
+        $("#switchCharacter").click(function(){
+            loadPage("switch_character");
+        });
+
+        $("#createNewCharacter").click(function(){
+            loadPage("create_new_character");
+        });
 
         //If there is a quest availible show quest button
 		displayQuestButton(hero_id);
