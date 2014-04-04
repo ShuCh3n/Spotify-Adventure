@@ -14,8 +14,8 @@
             var heroID = $(this).attr("value");
 
             switchCharacter(heroID);
-
-            $("body").load("index.html");
+			getCurrentHeroInfo();
+			loadPage("home");
         });
     });
 </script>

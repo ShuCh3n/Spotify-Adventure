@@ -104,6 +104,28 @@ function getAllHeroInfo(user_name){
     return returnval;
 }
 
+function getCurrentHeroInfo(){
+	//Get Hero Information
+    spotifyUSR = $.session.get("spotifyUSR");
+
+    heroInfo = getSingleHeroInfo(0, spotifyUSR);
+    var obj = $.parseJSON(heroInfo);
+
+    $.each(obj, function() {
+        hero_id = this['id'];
+        hero_name = this['name'];
+        hero_gender = this['gender'];
+        hero_level = this['level'];
+        full_hero_health = this['health'];
+        hero_exp = this['exp'];
+        hero_gold = this['gold'];
+    });
+
+    next_level = parseInt(hero_level) + 1;
+
+    next_level_exp = nextLevelExp(next_level);	
+}
+
 function checkExistPlayer(user_name){
     var returnval;
 
@@ -314,7 +336,6 @@ function requestJSON(data){
         cache: false,
         success: function(msg){
             returnval = msg;
-            console.log(msg);
         }
     });
 

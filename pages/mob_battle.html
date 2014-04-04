@@ -181,11 +181,12 @@
                     $(".battleStatus").html("You Win! <button id='homeCharacter'>Return Home</button>");
 
                     defeatedMob(mobid, hero_id);
-
-                    $('#homeCharacter').click(function(){
-                        loadPage("home");
-                    });
+                    getCurrentHeroInfo();
                 }
+                
+                $('#homeCharacter').click(function(){
+                        loadPage("home");   
+                 });
 
                 $(".battleStatus").fadeIn("slow");
             }else{
