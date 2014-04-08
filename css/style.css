@@ -8,6 +8,7 @@ body {
     height:100%;
     overflow:hidden;
     text-shadow: 3px 3px 0 #2a3c58;
+    color:#d1d1d1;
 }
 hr{
     margin-bottom:10px;
@@ -133,13 +134,16 @@ li{
 .quest_popup{
     width: 500px;
     min-height: 300px;
-    background: #fff;
+    background: #3b3b3b;
     display: none;
-    font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
-    text-shadow: none;
+    font-family: 'silkscreennormal', sans-serif;
+    text-shadow: 3px 3px 0 #2a3c58;
     margin: 0 auto;
     position: relative;
     z-index: 99;
+       -webkit-box-shadow: 7px 7px 0 rgba(0,0,0,0.29);
+    -moz-box-shadow: 7px 7px 0 rgba(0,0,0,0.29);
+    box-shadow: 7px 7px 0 rgba(0,0,0,0.29);
 }
 .quest_row{
     text-align: left;
@@ -152,16 +156,22 @@ li{
     display: none;
     background: #3b3b3b;
     color: #fff;
+       -webkit-box-shadow: 7px 7px 0 rgba(0,0,0,0.29);
+    -moz-box-shadow: 7px 7px 0 rgba(0,0,0,0.29);
+    box-shadow: 7px 7px 0 rgba(0,0,0,0.29);
 }
 
 .mob_menu{
     width: 250px;
     min-height: 300px;
-    background: #fff;
+    background: #334c75;
     margin-left: 50px;
-    font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
-    text-shadow: none;
+    font-family: 'silkscreennormal', sans-serif;
+    text-shadow: 3px 3px 0 #2a3c58;
     padding: 10px;
+       -webkit-box-shadow: 7px 7px 0 rgba(0,0,0,0.29);
+    -moz-box-shadow: 7px 7px 0 rgba(0,0,0,0.29);
+    box-shadow: 7px 7px 0 rgba(0,0,0,0.29);
 }
 
 .mob_menu h1{
@@ -175,21 +185,33 @@ li{
 
 .mobMenu{
     width: 250px;
-    min-height: 300px;
-    background: #fff;
+    min-height: 100px;
+    margin-top:20px;
+    background: #334c75;
     float: right;
-    font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
-    text-shadow: none;
+    font-family: 'silkscreennormal', sans-serif;
+    text-shadow: 3px 3px 0 #2a3c58;
+    overflow:hidden;
+    padding:15px;
+    margin-right:20px;
+     -webkit-box-shadow: 7px 7px 0 rgba(0,0,0,0.29);
+    -moz-box-shadow: 7px 7px 0 rgba(0,0,0,0.29);
+    box-shadow: 7px 7px 0 rgba(0,0,0,0.29);
 }
 
 .battleField{
-    width: 500px;
-    min-height: 300px;
+    width: 480px;
+    min-height: 52px;
     margin: 0 auto;
     overflow: hidden;
-    background: #fff;
-    font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
-    text-shadow: none;
+    background: #334c75;
+    font-family: 'silkscreennormal', sans-serif;
+    text-shadow: 3px 3px 0 #2a3c58;
+       -webkit-box-shadow: 7px 7px 0 rgba(0,0,0,0.29);
+    -moz-box-shadow: 7px 7px 0 rgba(0,0,0,0.29);
+    box-shadow: 7px 7px 0 rgba(0,0,0,0.29);
+    overflow:hidden;
+    padding:15px;
 }
 .playerField{
     width: 150px;
@@ -200,10 +222,25 @@ li{
     float: right;
 }
 .battleStatus{
-    font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
-    text-shadow: none;
+    font-family: 'silkscreennormal', sans-serif;
+    text-shadow: 3px 3px 0 #2a3c58;
     display: none;
     width: 500px;
     margin: 0 auto;
     text-align: center;
+}
+button{
+    width: auto;
+    border:0 none;
+    overflow:hidden;
+    padding:5px;
+    background: #4c5d7a;
+     -webkit-box-shadow: 7px 7px 0 rgba(0,0,0,0.29);
+    -moz-box-shadow: 7px 7px 0 rgba(0,0,0,0.29);
+    box-shadow: 7px 7px 0 rgba(0,0,0,0.29);
+    font-family: 'silkscreennormal', sans-serif;
+    text-shadow: 3px 3px 0 #2a3c58;
+    color:#d1d1d1;
+    margin-bottom:10px;
+
 }
