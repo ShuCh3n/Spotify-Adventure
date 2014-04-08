@@ -1,6 +1,10 @@
 *{
     margin: 0;
 }
+
+html {
+    background-color: #334c74;
+}
 body {
     font-family: 'silkscreennormal', sans-serif;
     font-size: 1.4em;
@@ -18,6 +22,12 @@ hr{
 li{
     list-style-type: none;
 }
+
+a{
+    color: #d1d1d1;
+    text-shadow: 5px 5px 0 #2a3c58;
+}
+
 .hero{
     position:absolute;
     bottom:170px;
@@ -49,6 +59,12 @@ li{
 .createCharacterMenu{
     width: 300px;
     margin: 300px auto;
+    color: #d1d1d1;
+    text-shadow: 5px 5px 0 #2a3c58;
+}
+.characterList{
+    width: 300px;
+    margin: 200px auto;
 }
 .gender_button{
     margin: 10px;
