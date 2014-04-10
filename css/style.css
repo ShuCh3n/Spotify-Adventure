@@ -154,7 +154,7 @@ a{
 /*shu added*/
 .quest_popup{
     width: 500px;
-    min-height: 300px;
+    min-height: 190px;
     background: #3b3b3b;
     display: none;
     font-family: 'silkscreennormal', sans-serif;
