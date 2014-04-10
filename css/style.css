@@ -28,7 +28,11 @@ a{
     text-shadow: 5px 5px 0 #2a3c58;
 }
 
-.hero,
+.hero{
+    position:absolute;
+    bottom:170px;
+    left:430px;
+}
 .opponent{
     position:absolute;
     bottom:170px;
