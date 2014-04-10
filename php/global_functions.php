@@ -269,13 +269,9 @@ function completeQuests($hero_id, $quest_id){
     }
 
     if($reward_type == 2){
-        $new_hero_gold = $hero_gold + $amount;
+        echo $new_hero_gold = $hero_gold + $amount;
 
         $mysqli->query("UPDATE `prj3_heroes` SET `gold` = '" . $new_hero_gold . "' WHERE `id` = '" . $hero_id . "'");
-    }
-
-    if($reward_type == 3){
-        $mysqli->query("INSERT INTO `prj3_inventory` VALUES ('" . $hero_id . "', '" . $amount . "');");
     }
 
 }
@@ -353,52 +349,5 @@ function defeatedMob($mob_id, $hero_id){
     $new_exp = $hero_exp + $mob_experience;
 
     $mysqli->query("UPDATE `prj3_heroes` SET `exp` = '" . $new_exp . "', `gold` = '" . $new_gold . "' WHERE `id` ='" . $hero_id . "';");
-}
-
-function itemInfo($item_id){
-    global $mysqli;
-
-    $query = $mysqli->query("SELECT * FROM prj3_items WHERE id = '" . $item_id . "'");
-    $row = $query->fetch_object();
-
-    return array($row->id, $row->name, $row->item_level, $row->description, $row->img_path);
-
-}
-
-function heroInventory($hero_id){
-    global $mysqli;
-
-    $query = $mysqli->query("SELECT * FROM prj3_inventory WHERE hero_id = '" . $hero_id . "'");
-    $query_count = $query->num_rows;
-
-    $i = 0;
-
-    if($query_count > 0){
-        echo  '[';
-
-        while($row = $query->fetch_object()){
-            list($id, $name, $item_level, $description, $img_path) = itemInfo($row->item_id);
-
-            $i++;
-
-            echo '{
-	                "item_id":"' . $id . '" ,
-	                "item_name":"' . addslashes($name) . '" ,
-	                "item_level":"' . $item_level . '" ,
-	                "item_description":"' . addslashes($description) . '",
-	                "img_path":"' . $img_path . '"';
-            if($i != $query_count){
-                echo '},';
-            }else{
-                echo '}';
-            }
-
-        }
-
-        echo ']';
-    }else{
-        echo "0";
-    }
-
 }
 ?>

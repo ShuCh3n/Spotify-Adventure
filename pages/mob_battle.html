@@ -1,12 +1,5 @@
 <script>
     $(function(){
-        //Gender
-        if(hero_gender == 0){
-            $(".hero").html("<img src='images/hero_male.gif'>");
-        }else{
-            $(".hero").html("<img src='images/hero_female.gif'>");
-        }
-
         $("#hero_name").html(hero_name);
         $("#hero_level").html(hero_level);
         $("#hero_exp").html(hero_exp + "/" + next_level_exp);
@@ -212,9 +205,7 @@
     <div class="clouds"></div>
 </div>
 
-<div class="hero"></div>
-<div class="opponent"><img src="images/bear.gif"></div>
-
+<div class="hero"><img src="images/hero.gif"></div>
 <div class="ground"></div>
 <hr>
 
@@ -228,7 +219,7 @@
 
 <div class="userAttackMenu">
     <button class="userattack" id="1">Attack</button>
-    <button class="userattack" id="2">Defend</button>
+    <button class="userattack" id="2">Deffend</button>
     <button class="userattack" id="3">Heal</button>
 </div>
 
