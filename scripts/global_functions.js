@@ -335,11 +335,17 @@ function requestJSON(data){
         data: data,
         cache: false,
         success: function(msg){
+            console.log(msg);
             returnval = msg;
         }
     });
 
     return returnval;
+}
+
+function newHero(gender, user_name, hero_name){
+    var data = {'page':'createhero','gendertype':gender,'spotify_user':user_name,'hero_name':hero_name};
+    requestJSON(data);
 }
 
 function searchMob(search_string){
