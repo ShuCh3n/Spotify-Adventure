@@ -6,25 +6,15 @@
 
         $(".gender_button").click(function(){
             var hero_name = $("#hero_name").val();
-            var gender = $(this).attr("id");
+            gendertype = $(this).attr("id");
 
             var msg = checkHeroName(hero_name);
             if(msg == 0){
-                getUserInfo(function(user_name) {
-                    $.ajax({
-                        type: "POST",
-                        url: "http://stud.cmi.hro.nl/0876292/jaar1/proj3/index.php",
-                        data: {
-                            page: "createhero",
-                            gender: gender,
-                            spotify_user: user_name,
-                            hero_name: hero_name,
-                            success: function(){
 
-                            }
-                        },
-                        cache: false
-                    });
+                getUserInfo(function(user_name) {
+
+
+                    newHero(gendertype, user_name, hero_name);
 
                     //Create session of the new hero info
                     var heroInfo = getSingleHeroInfo(0, user_name);

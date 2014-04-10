@@ -40,13 +40,12 @@ function createNewHero($gender, $spotify_user, $hero_name){
 
     switch ($gender) {
         case "male":
-            $gender = 1;
-            break;
-        case "female":
             $gender = 0;
             break;
+        case "female":
+            $gender = 1;
+            break;
     }
-
     $mysqli->query("INSERT INTO `prj3_heroes` VALUES (NULL , '" . $user_id . "', '" . $hero_name ."', '" . $gender . "', '0', '80', '0', '0', CURRENT_TIMESTAMP)");
 }
 
