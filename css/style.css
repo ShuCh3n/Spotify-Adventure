@@ -77,18 +77,16 @@ a{
     cursor: pointer;
 }
 .gender_button#male{
-    background: #adddff;
-    border: #00548e 1px solid;
+    background: #3e5e92;
 }
 .gender_button#male:hover{
-    background: #d6edfd;
+    background: #3e639e;
 }
 .gender_button#female{
-    background: #ffdafc;
-    border: #a40097 1px solid;
+    background: #7c3a77;
 }
 .gender_button#female:hover{
-    background: #ffe8fd;
+    background: #8a3a84;
 }
 .characterInfo{
     margin-left: auto;
