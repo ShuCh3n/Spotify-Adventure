@@ -31,12 +31,12 @@ a{
 .hero{
     position:absolute;
     bottom:170px;
-    left:430px;
+    left:330px;
 }
 .opponent{
     position:absolute;
     bottom:170px;
-    left:300px;
+    left:430px;
 }
 .ground{
     position:absolute;
