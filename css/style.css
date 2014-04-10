@@ -184,8 +184,8 @@ a{
 
 .mob_menu,
 .inventory_menu{
-    width: 250px;
-    min-height: 300px;
+    width: 265px;
+    min-height: 185px;
     background: #334c75;
     margin-left: 50px;
     font-family: 'silkscreennormal', sans-serif;
@@ -198,7 +198,7 @@ a{
 .inventory_menu{
     float: right;
     margin-right: 50px;
-    margin-top: -320px;
+    margin-top: -205px;
 }
 
 .mob_menu h1,
