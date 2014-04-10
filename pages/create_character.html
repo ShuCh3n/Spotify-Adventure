@@ -7,11 +7,28 @@
         $(".gender_button").click(function(){
             var hero_name = $("#hero_name").val();
             gendertype = $(this).attr("id");
+            var gender = $(this).attr("id");
 
             var msg = checkHeroName(hero_name);
             if(msg == 0){
 
                 getUserInfo(function(user_name) {
+
+                     $.ajax({
+                        type: "POST",
+                        url: "http://stud.cmi.hro.nl/0876292/jaar1/proj3/index.php",
+                        data: {
+                            page: "createhero",
+                            gender: gender,
+                            spotify_user: user_name,
+                            hero_name: hero_name,
+                            success: function(){
+
+                            }
+                        },
+                        cache: false
+                    });
+
 
 
                     newHero(gendertype, user_name, hero_name);

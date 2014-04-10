@@ -29,14 +29,11 @@ a{
 }
 
 .hero{
-<<<<<<< HEAD
     position:absolute;
     bottom:170px;
     left:330px;
 }
 .opponent{
-=======
->>>>>>> parent of 004d973... Gender update, inventory, bear.gif
     position:absolute;
     bottom:170px;
     left:430px;
@@ -183,16 +180,10 @@ a{
     box-shadow: 7px 7px 0 rgba(0,0,0,0.29);
 }
 
-<<<<<<< HEAD
 .mob_menu,
 .inventory_menu{
     width: 265px;
     min-height: 185px;
-=======
-.mob_menu{
-    width: 250px;
-    min-height: 300px;
->>>>>>> parent of 004d973... Gender update, inventory, bear.gif
     background: #334c75;
     margin-left: 50px;
     font-family: 'silkscreennormal', sans-serif;
@@ -202,16 +193,14 @@ a{
     -moz-box-shadow: 7px 7px 0 rgba(0,0,0,0.29);
     box-shadow: 7px 7px 0 rgba(0,0,0,0.29);
 }
-<<<<<<< HEAD
 .inventory_menu{
     float: right;
     margin-right: 50px;
     margin-top: -205px;
 }
-=======
->>>>>>> parent of 004d973... Gender update, inventory, bear.gif
 
-.mob_menu h1{
+.mob_menu h1,
+.inventory_menu h1{
     font-size: 18px;
 }
 
