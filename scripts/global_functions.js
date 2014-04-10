@@ -358,6 +358,14 @@ function getMobInfo(mob_id){
     return returnval;
 }
 
+function getHeroInventory(heroID){
+    var data = {'page':'heroinventory','heroid':heroID};
+
+    var returnval = requestJSON(data);
+
+    return returnval;
+}
+
 function randomNumber(min, max){
     var randomnum =  Math.round(Math.random() * (max - min) + min);
 

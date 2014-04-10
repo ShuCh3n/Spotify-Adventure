@@ -28,7 +28,8 @@ a{
     text-shadow: 5px 5px 0 #2a3c58;
 }
 
-.hero{
+.hero,
+.opponent{
     position:absolute;
     bottom:170px;
     left:300px;
@@ -177,7 +178,8 @@ a{
     box-shadow: 7px 7px 0 rgba(0,0,0,0.29);
 }
 
-.mob_menu{
+.mob_menu,
+.inventory_menu{
     width: 250px;
     min-height: 300px;
     background: #334c75;
@@ -189,8 +191,14 @@ a{
     -moz-box-shadow: 7px 7px 0 rgba(0,0,0,0.29);
     box-shadow: 7px 7px 0 rgba(0,0,0,0.29);
 }
+.inventory_menu{
+    float: right;
+    margin-right: 50px;
+    margin-top: -325px;
+}
 
-.mob_menu h1{
+.mob_menu h1,
+.inventory_menu h1{
     font-size: 18px;
 }
 
